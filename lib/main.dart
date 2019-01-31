@@ -40,6 +40,8 @@ class RandomWordState extends State<RandomWords> {
   // Dart 语言中使用下划线前缀标示符,会强制其变成私有变量.
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 19.0,color: CSSColors.darkGoldenRod);
+  final _saved = new Set<WordPair>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +70,29 @@ class RandomWordState extends State<RandomWords> {
   }
 
   Widget _buildRow (WordPair pair) {
+    final bool alreadySaved = _saved.contains(pair);
+
     return ListTile(
-      title: Text(pair.asPascalCase,
-      style: _biggerFont,),
+      title: new Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+      // add icon to listView
+      trailing: new Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? CSSColors.red : null,
+      ),
+      // add interactivity
+      onTap: () {
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          }else {
+            _saved.add(pair);
+          }
+        });
+      },
     );
+
   }
 }
