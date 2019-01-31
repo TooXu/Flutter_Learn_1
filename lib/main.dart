@@ -4,7 +4,43 @@ import 'package:css_colors/css_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'basicWidgetPage.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new MaterialApp(
+  title: 'Flutter Tutorial',
+  home: new TutorialHome(),
+));
+
+ /*
+ * Material Components
+ * */
+
+ class TutorialHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Scaffold(
+      appBar: new AppBar(
+        leading: new IconButton(icon: new Icon(Icons.menu), onPressed: null),
+        title: new Text('Title'),
+        actions: <Widget>[
+          new IconButton(icon: new Icon(Icons.search), onPressed: null),
+
+        ],
+
+      ),
+      body: new Center(
+        child: new Text('hello world'),
+      ),
+      floatingActionButton: new FloatingActionButton(
+          tooltip: 'add',
+          child: new Icon(Icons.add),
+          onPressed: null,
+      ),
+    );
+  }
+
+ }
+
+
 
 class MyApp extends StatelessWidget {
   @override
