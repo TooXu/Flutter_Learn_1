@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:css_colors/css_colors.dart';
+import 'package:flutter/cupertino.dart';
+import 'basicWidgetPage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -12,7 +14,10 @@ class MyApp extends StatelessWidget {
 
     return new MaterialApp(
       title: 'Welcome to Flutter',
-      home: RandomWords(),
+      theme: new ThemeData(
+        primaryColor: CSSColors.bisque,
+      ),
+      home: new RandomWords(),
 //        appBar: new AppBar(
 //          title: new Text('Welcome to Flutter'),
 //        ),
@@ -51,7 +56,8 @@ class RandomWordState extends State<RandomWords> {
       appBar: AppBar(
         title: Text('Startup Name Generator'),
         actions: <Widget>[
-          new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved)
+          new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
+          new IconButton(icon: const Icon(Icons.arrow_forward_ios), onPressed: _goBasicWidget)
         ],
       ),
       body: _buildSuggestions(),
@@ -98,9 +104,10 @@ class RandomWordState extends State<RandomWords> {
     );
   }
 
+  // create a route and added logic for moving between the home route and the new route
   void _pushSaved() {
     Navigator.of(context).push(
-      new MaterialPageRoute(
+      new CupertinoPageRoute (
           builder: (BuildContext context) {
             final Iterable<ListTile> tiles = _saved.map(
                 (WordPair pair) {
@@ -130,6 +137,16 @@ class RandomWordState extends State<RandomWords> {
             );
           }
       ),
+    );
+  }
+
+  void _goBasicWidget() {
+    Navigator.of(context).push (
+      new MaterialPageRoute(
+          builder: (BuildContext context) {
+            return new MyScaffold();
+          }
+    )
     );
   }
 
