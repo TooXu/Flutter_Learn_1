@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # flutter_package_learn
 
 A new Flutter project.
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.io/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
+=======
+# Flutter_Learn_1
+>>>>>>> fb81b75192e777ac1eb357a11ad7cdac63a5181b

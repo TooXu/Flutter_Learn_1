@@ -12,15 +12,15 @@ class MyApp extends StatelessWidget {
 
     return new MaterialApp(
       title: 'Welcome to Flutter',
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Welcome to Flutter'),
-        ),
-        body: new Center(
-          child: new RandomWords(),
-
-        ),
-      ),
+      home: RandomWords(),
+//        appBar: new AppBar(
+//          title: new Text('Welcome to Flutter'),
+//        ),
+//        body: new Center(
+//          child: new RandomWords(),
+//
+//        ),
+//      ),
     );
   }
 }
@@ -37,9 +37,40 @@ class RandomWords extends StatefulWidget {
 
 // 添加 RandomWordsState 类. 该应用的大部分代码都在该类中 该类持有 RandomWords widget 的状态.
 class RandomWordState extends State<RandomWords> {
+  // Dart 语言中使用下划线前缀标示符,会强制其变成私有变量.
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 19.0,color: CSSColors.darkGoldenRod);
+
   @override
   Widget build(BuildContext context) {
-    final wordPair = new WordPair.random();
-    return new Text(wordPair.asPascalCase,style: TextStyle(color: CSSColors.red));
+//    final wordPair = new WordPair.random();
+//    return new Text(wordPair.asPascalCase,style: TextStyle(color: CSSColors.red));
+    return Scaffold (
+      appBar: AppBar(
+        title: Text('Startup Name Generator'),
+      ),
+      body: _buildSuggestions(),
+    );
+  }
+
+  Widget _buildSuggestions(){
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context,i){
+        if(i.isOdd)return Divider();
+        final index = i ~/2;
+        if (index >= _suggestions.length) {
+          _suggestions.addAll(generateWordPairs().take(10));
+        }
+        return _buildRow(_suggestions[index]);
+      },
+    );
+  }
+
+  Widget _buildRow (WordPair pair) {
+    return ListTile(
+      title: Text(pair.asPascalCase,
+      style: _biggerFont,),
+    );
   }
 }
