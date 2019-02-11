@@ -10,6 +10,22 @@ import 'package:flutter/material.dart';
 //  }
 //}
 
+class MyScaffold extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Material(
+      child: new Column(
+        children: <Widget>[
+          new basicWidgetPage(
+            title: new Text('Title'),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class basicWidgetPage extends StatelessWidget {
   final Widget title;
 
@@ -43,22 +59,6 @@ class basicWidgetPage extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class MyScaffold extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Material(
-      child: new Column(
-        children: <Widget>[
-          new basicWidgetPage(
-            title: new Text('Title'),
-          )
-        ],
       ),
     );
   }

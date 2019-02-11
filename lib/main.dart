@@ -3,13 +3,16 @@ import 'package:english_words/english_words.dart';
 import 'package:css_colors/css_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'basicWidgetPage.dart';
+import 'sampleAppPageState.dart';
 
-void main() => runApp(new MaterialApp(
-      title: 'Flutter Tutorial',
-      home: new Container(
-        child: new TutorialHome(),
-      ),
-    ));
+void main() => runApp(new SampleApp());
+
+//void main() => runApp(new MaterialApp(
+//      title: 'Flutter Tutorial',
+//      home: new Container(
+//        child: new MyScaffold(),
+//      ),
+//    ));
 
 /*
  * Material Components2
