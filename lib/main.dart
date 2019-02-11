@@ -5,47 +5,132 @@ import 'package:flutter/cupertino.dart';
 import 'basicWidgetPage.dart';
 
 void main() => runApp(new MaterialApp(
-  title: 'Flutter Tutorial',
-  home: new TutorialHome(),
-));
+      title: 'Flutter Tutorial',
+      home: new Container(
+        child: new TutorialHome(),
+      ),
+    ));
 
- /*
- * Material Components
+/*
+ * Material Components2
  * */
 
- class TutorialHome extends StatelessWidget {
+class TutorialHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    // Scaffold 是 Material 中的主要布局组件.
+
     return new Scaffold(
       appBar: new AppBar(
         leading: new IconButton(icon: new Icon(Icons.menu), onPressed: null),
         title: new Text('Title'),
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.search), onPressed: null),
-
         ],
-
       ),
       body: new Center(
         child: new Text('hello world'),
       ),
       floatingActionButton: new FloatingActionButton(
-          tooltip: 'add',
-          child: new Icon(Icons.add),
-          onPressed: null,
+        tooltip: 'add',
+        child: new Icon(Icons.add),
+        onPressed: null,
       ),
     );
   }
+}
 
- }
+/*
+  手势处理
+* */
 
+class MyButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new GestureDetector(
+      onTap: () {
+        print('my button was tapped!');
+      },
+      child: new Container(
+        height: 33.0,
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        decoration: new BoxDecoration(
+          borderRadius: new BorderRadius.circular(5.8),
+          color: Colors.lightGreen[500],
+        ),
+        child: new Center(
+          child: new Text('engage '),
+        ),
+      ),
+    );
+  }
+}
 
+/*
+ * 更改 widgets 显示状态
+ * */
+class Counter extends StatefulWidget {
+  @override
+  _CounterState createState() => new _CounterState();
+}
 
+class _CounterState extends State<Counter> {
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Row(
+      children: <Widget>[
+        new CounterIncrementor(
+          onPressed: _increment,
+        ),
+        new CounterDisplay(
+          count: _counter,
+        )
+      ],
+    );
+  }
+}
+
+class CounterDisplay extends StatelessWidget {
+  final int count;
+
+  const CounterDisplay({Key key, this.count}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Text('Count:$count');
+  }
+}
+
+class CounterIncrementor extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const CounterIncrementor({Key key, this.onPressed}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new RaisedButton(
+      onPressed: onPressed,
+      child: new Text('Increment'),
+    );
+  }
+}
+
+/// interact
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
 //    final wordPair = new WordPair.random();
 
     return new MaterialApp(
@@ -80,32 +165,34 @@ class RandomWords extends StatefulWidget {
 class RandomWordState extends State<RandomWords> {
   // Dart 语言中使用下划线前缀标示符,会强制其变成私有变量.
   final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 19.0,color: CSSColors.darkGoldenRod);
+  final _biggerFont =
+      const TextStyle(fontSize: 19.0, color: CSSColors.darkGoldenRod);
   final _saved = new Set<WordPair>();
-
 
   @override
   Widget build(BuildContext context) {
 //    final wordPair = new WordPair.random();
 //    return new Text(wordPair.asPascalCase,style: TextStyle(color: CSSColors.red));
-    return Scaffold (
+    return Scaffold(
       appBar: AppBar(
         title: Text('Startup Name Generator'),
         actions: <Widget>[
           new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
-          new IconButton(icon: const Icon(Icons.arrow_forward_ios), onPressed: _goBasicWidget)
+          new IconButton(
+              icon: const Icon(Icons.arrow_forward_ios),
+              onPressed: _goBasicWidget)
         ],
       ),
       body: _buildSuggestions(),
     );
   }
 
-  Widget _buildSuggestions(){
+  Widget _buildSuggestions() {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
-      itemBuilder: (context,i){
-        if(i.isOdd)return Divider();
-        final index = i ~/2;
+      itemBuilder: (context, i) {
+        if (i.isOdd) return Divider();
+        final index = i ~/ 2;
         if (index >= _suggestions.length) {
           _suggestions.addAll(generateWordPairs().take(10));
         }
@@ -114,7 +201,7 @@ class RandomWordState extends State<RandomWords> {
     );
   }
 
-  Widget _buildRow (WordPair pair) {
+  Widget _buildRow(WordPair pair) {
     final bool alreadySaved = _saved.contains(pair);
 
     return ListTile(
@@ -132,7 +219,7 @@ class RandomWordState extends State<RandomWords> {
         setState(() {
           if (alreadySaved) {
             _saved.remove(pair);
-          }else {
+          } else {
             _saved.add(pair);
           }
         });
@@ -143,47 +230,35 @@ class RandomWordState extends State<RandomWords> {
   // create a route and added logic for moving between the home route and the new route
   void _pushSaved() {
     Navigator.of(context).push(
-      new CupertinoPageRoute (
-          builder: (BuildContext context) {
-            final Iterable<ListTile> tiles = _saved.map(
-                (WordPair pair) {
-                  return new ListTile (
-                    title: new Text(
-                      pair.asPascalCase,
-                      style: _biggerFont,
-                    ),
-                  );
-                }
-            );
+      new CupertinoPageRoute(builder: (BuildContext context) {
+        final Iterable<ListTile> tiles = _saved.map((WordPair pair) {
+          return new ListTile(
+            title: new Text(
+              pair.asPascalCase,
+              style: _biggerFont,
+            ),
+          );
+        });
 
-            final List<Widget> divided = ListTile
-            .divideTiles(
-              context: context,
-              tiles: tiles,
-            )
-            .toList();
+        final List<Widget> divided = ListTile.divideTiles(
+          context: context,
+          tiles: tiles,
+        ).toList();
 
-            return new Scaffold(
-              appBar: new AppBar(
-                title: const Text('Saved the suggestion'),
-              ),
-              body: new ListView(
-                children: divided
-              ),
-            );
-          }
-      ),
+        return new Scaffold(
+          appBar: new AppBar(
+            title: const Text('Saved the suggestion'),
+          ),
+          body: new ListView(children: divided),
+        );
+      }),
     );
   }
 
   void _goBasicWidget() {
-    Navigator.of(context).push (
-      new MaterialPageRoute(
-          builder: (BuildContext context) {
-            return new MyScaffold();
-          }
-    )
-    );
+    Navigator.of(context)
+        .push(new MaterialPageRoute(builder: (BuildContext context) {
+      return new MyScaffold();
+    }));
   }
-
 }
